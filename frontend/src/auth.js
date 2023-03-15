@@ -82,5 +82,9 @@ getElem('auth-form').addEventListener('submit', (e) => {
         // redirect
         window.location.href = "../main_page.html";
       }
+    })
+    .catch(e => {
+      getElem('error-msg').textContent = "Something went wrong from the server!";
+      openModal();
     });
 });
