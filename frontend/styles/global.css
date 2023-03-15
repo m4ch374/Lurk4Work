@@ -4,4 +4,10 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: Arial;
+    background-color: #1c1c1c;
+    color: white;
+}
+
+.header-size {
+    font-size: 40px;
 }
