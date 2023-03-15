@@ -25,8 +25,27 @@ getElem('type-link').addEventListener("click", () => {
   }
 
   btn.textContent = header.textContent;
-  getElem("error-msg").hidden = true;
 });
+
+const openModal = () => {
+  getElem('error-modal').showModal();
+}
+
+const closeModal = () => {
+  getElem('error-modal').close();
+}
+
+document.querySelectorAll('.error-close').forEach(e => {
+  e.addEventListener("click", () => {
+    closeModal();
+  });
+});
+
+window.onclick = e => {
+  if (e.target == getElem('error-modal')) {
+    closeModal();
+  }
+}
 
 getElem('auth-form').addEventListener('submit', (e) => {
   e.preventDefault(); // To prevent page reload
@@ -57,9 +76,8 @@ getElem('auth-form').addEventListener('submit', (e) => {
     .then(res => res.json())
     .then(data => {
       if (data.error) {
-        const errorDisplay = getElem("error-msg");
-        errorDisplay.textContent = data.error;
-        errorDisplay.hidden = false;
+        getElem('error-msg').textContent = data.error;
+        openModal();
       } else {
         // redirect
         window.location.href = "../main_page.html";
