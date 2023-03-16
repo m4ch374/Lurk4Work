@@ -53,13 +53,13 @@ getElem('auth-form').addEventListener('submit', (e) => {
   let apiRoute = "/auth/login";
   let payload = {
     "email": getElem('email-input').value,
-    "passowrd": getElem('password-input').value,
+    "password": getElem('password-input').value,
   };
 
   if (!isLoginMode()) {
     apiRoute = "/auth/register";
     payload = {
-      name: getElem('name-input').textContent,
+      name: getElem('name-input').value,
       ...payload,
     };
   } 
