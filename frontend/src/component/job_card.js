@@ -54,6 +54,42 @@ const jobCardBody = (props) => {
   return cardBody;
 }
 
+const jobCardFooter = (props) => {
+  const cardFooter = document.createElement('div');
+  cardFooter.className = "container-fluid text-center";
+
+  // Create likes element
+  const likes = document.createElement('div');
+  likes.className = "col";
+
+  const likeIcon = document.createElement('i');
+  likeIcon.className = "bi bi-hand-thumbs-up-fill"
+
+  const likeCount = document.createElement('span');
+  likeCount.textContent = " " + props.likes.length;
+
+  likes.append(likeIcon, likeCount);
+
+  // Create comment element 
+  const comment = document.createElement('div');
+  comment.className = "col";
+
+  const commentIcon = document.createElement('i');
+  commentIcon.className = "bi bi-chat-left-text-fill";
+
+  const commentCount = document.createElement('span');
+  commentCount.textContent = " " + props.comments.length;
+
+  comment.append(commentIcon, commentCount);
+
+  const containerRow = document.createElement('div');
+  containerRow.className = "row";
+  containerRow.append(likes, comment);
+
+  cardFooter.appendChild(containerRow);
+  return cardFooter;
+}
+
 const jobCard = (props) => {
   const card = document.createElement('div');
   // not using gaps to seperate cards bc there are some issues with it
@@ -61,9 +97,10 @@ const jobCard = (props) => {
 
   const header = jobCardHeader(props);
   const body = jobCardBody(props);
+  const footer = jobCardFooter(props);
 
   const hr = document.createElement('hr');
-  card.append(header, hr, body);
+  card.append(header, hr, body, hr, footer);
   return card;
 }
 
