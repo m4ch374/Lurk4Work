@@ -1,7 +1,7 @@
 // Not letting us use react is a war crime
 import { USER_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
-import { getTimeDiffStr } from "../helpers.js";
+import { fileToDataUrl, getTimeDiffStr } from "../helpers.js";
 
 const jobCardHeader = (props) => {
   const cardHeader = document.createElement('div');
@@ -34,14 +34,36 @@ const jobCardHeader = (props) => {
   return cardHeader;
 }
 
+const jobCardBody = (props) => {
+  const cardBody = document.createElement('div');
+
+  const jobImg = document.createElement('img');
+  jobImg.src = props.image;
+
+  const jobTitle = document.createElement('h1');
+  jobTitle.textContent = props.title;
+
+  const startingDate = document.createElement('h6');
+  startingDate.textContent = `Starts at: ${props.start}`;
+  startingDate.className = "text-secondary job-start-text";
+
+  const jobDescript = document.createElement('p');
+  jobDescript.textContent = props.description;
+
+  cardBody.append(jobImg, jobTitle, startingDate, jobDescript);
+  return cardBody;
+}
+
 const jobCard = (props) => {
   const card = document.createElement('div');
-  card.className = "job-card p-4 pb-3 rounded-3 bg-white text-black";
+  // not using gaps to seperate cards bc there are some issues with it
+  card.className = "job-card p-4 pb-3 rounded-3 bg-white text-black mb-4";
 
   const header = jobCardHeader(props);
+  const body = jobCardBody(props);
 
   const hr = document.createElement('hr');
-  card.append(header, hr);
+  card.append(header, hr, body);
   return card;
 }
 
