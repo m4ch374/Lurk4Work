@@ -26,8 +26,12 @@ class Fetcher {
     return this;
   }
 
-  withPayload(payload) {
+  withJsonPayload(payload) {
     this.option.body = JSON.stringify(payload);
+    this.option.headers = {
+      ...this.option.headers,
+      "Content-type": "application/json",
+    }
     return this;
   }
 

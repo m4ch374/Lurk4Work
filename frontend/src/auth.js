@@ -1,4 +1,5 @@
 import { LOGIN_ROUTE, REGISTER_ROUTE, SERVER_ROUTE } from "./config.js";
+import Fetcher from "./fetcher.js";
 
 const getElem = (elemId) => {
   return document.querySelector(`#${elemId}`);
@@ -66,17 +67,9 @@ getElem('auth-form').addEventListener('submit', (e) => {
     };
   } 
 
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  }
+  const result = Fetcher.post(apiRoute).withJsonPayload(payload).fetchResult();
 
-  fetch(SERVER_ROUTE + apiRoute, options)
-    .then(res => res.json())
-    .then(data => {
+  result.then(data => {
       if (data.error) {
         getElem('error-msg').textContent = data.error;
         openModal();

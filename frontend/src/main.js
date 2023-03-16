@@ -6,8 +6,6 @@ import Fetcher from './fetcher.js';
 const populateFeed = () => {
   checkIntegrety();
 
-  const usrToken = localStorage.getItem('token');
-
   const fetchResult = Fetcher.get(JOB_FEED_ROUTE)
                       .withQuery("start", 0)
                       .withLocalStorageToken()
