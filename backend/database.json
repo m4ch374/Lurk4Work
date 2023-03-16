@@ -4,7 +4,10 @@
       "email": "some@gmail.com",
       "name": "some",
       "password": "123",
-      "watcheeUserIds": {}
+      "watcheeUserIds": {
+        "65687": true,
+        "95112": true
+      }
     },
     "65687": {
       "email": "betty@email.com",

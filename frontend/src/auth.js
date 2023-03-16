@@ -1,9 +1,11 @@
-import { SERVER_ROUTE } from "./config.js";
+import { LOGIN_ROUTE, REGISTER_ROUTE, SERVER_ROUTE } from "./config.js";
 
 const getElem = (elemId) => {
   return document.querySelector(`#${elemId}`);
 }
 
+// Introduces bugs if user changes the Html in development tool
+// Therefore assuming users are monke 
 const isLoginMode = () => {
   return getElem('auth-header').textContent.trim() === 'Login'; 
 }
@@ -50,14 +52,14 @@ window.onclick = e => {
 getElem('auth-form').addEventListener('submit', (e) => {
   e.preventDefault(); // To prevent page reload
 
-  let apiRoute = "/auth/login";
+  let apiRoute = LOGIN_ROUTE;
   let payload = {
     "email": getElem('email-input').value,
     "password": getElem('password-input').value,
   };
 
   if (!isLoginMode()) {
-    apiRoute = "/auth/register";
+    apiRoute = REGISTER_ROUTE;
     payload = {
       name: getElem('name-input').value,
       ...payload,
@@ -80,6 +82,7 @@ getElem('auth-form').addEventListener('submit', (e) => {
         openModal();
       } else {
         // redirect
+        localStorage.setItem('token', data.token);
         window.location.href = "../main_page.html";
       }
     })
