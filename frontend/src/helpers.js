@@ -14,18 +14,30 @@
  * @return {Promise<string>} Promise which resolves to the file as a data url.
  */
 export function fileToDataUrl(file) {
-    const validFileTypes = [ 'image/jpeg', 'image/png', 'image/jpg' ]
-    const valid = validFileTypes.find(type => type === file.type);
-    // Bad data, let's walk away.
-    if (!valid) {
-        throw Error('provided file is not a png, jpg or jpeg image.');
-    }
-    
-    const reader = new FileReader();
-    const dataUrlPromise = new Promise((resolve,reject) => {
-        reader.onerror = reject;
-        reader.onload = () => resolve(reader.result);
-    });
-    reader.readAsDataURL(file);
-    return dataUrlPromise;
+	const validFileTypes = [ 'image/jpeg', 'image/png', 'image/jpg' ]
+	const valid = validFileTypes.find(type => type === file.type);
+	// Bad data, let's walk away.
+	if (!valid) {
+			throw Error('provided file is not a png, jpg or jpeg image.');
+	}
+	
+	const reader = new FileReader();
+	const dataUrlPromise = new Promise((resolve,reject) => {
+			reader.onerror = reject;
+			reader.onload = () => resolve(reader.result);
+	});
+	reader.readAsDataURL(file);
+	return dataUrlPromise;
+}
+
+export function getTimeDiffStr(timeStr) {
+	const targetDate = new Date(timeStr);
+	const diff = new Date().getTime() - targetDate.getTime();
+
+	const hrs = Math.floor(diff / (1000 * 60 * 60));
+	const mins = Math.floor((diff / (1000 * 60)) % 60);
+
+	console.log(hrs);
+
+	return hrs > 24 ? targetDate.toLocaleDateString('en-AU') : `${hrs}h ${mins}m ago`;
 }

@@ -1,7 +1,7 @@
 // Not letting us use react is a war crime
-
 import { USER_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
+import { getTimeDiffStr } from "../helpers.js";
 
 const jobCardHeader = (props) => {
   const cardHeader = document.createElement('div');
@@ -14,7 +14,7 @@ const jobCardHeader = (props) => {
 
   const postDate = document.createElement('h6');
   postDate.className = "fs-6 text-secondary";
-  postDate.textContent = props.createdAt;
+  postDate.textContent = getTimeDiffStr(props.createdAt);
 
   const fetchResult = Fetcher.get(USER_ROUTE)
                         .withLocalStorageToken()
