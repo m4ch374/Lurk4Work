@@ -1,7 +1,7 @@
 // Not letting us use react is a war crime
 import { USER_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
-import { fileToDataUrl, getTimeDiffStr } from "../helpers.js";
+import { getTimeDiffStr } from "../helpers.js";
 
 const jobCardHeader = (props) => {
   const cardHeader = document.createElement('div');
