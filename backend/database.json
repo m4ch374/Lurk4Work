@@ -26,7 +26,8 @@
       "name": "Augustine",
       "password": "august",
       "watcheeUserIds": {
-        "65687": true
+        "65687": true,
+        "97467": true
       }
     },
     "97467": {
@@ -69,7 +70,8 @@
       "description": "Dedicated technical wizard with a passion and interest in human relationships",
       "createdAt": "2023-03-15T18:30:15.850Z",
       "likes": {
-        "65687": true
+        "65687": true,
+        "97467": true
       },
       "comments": [
         {
