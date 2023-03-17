@@ -3,6 +3,7 @@ import { JOB_LIKE_ROUTE, USER_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
 import { getTimeDiffStr, getElem } from "../helpers.js";
 import Comment from "./comment.js";
+import UserHandle from "./user_handle.js";
 
 const setModalContent = (title, content) => {
   getElem('placeholder-title').textContent = title;
@@ -23,11 +24,6 @@ const jobCardHeader = (props) => {
   const cardHeader = document.createElement('div');
   cardHeader.className = "fs-3";
 
-  const userIcon = document.createElement('i');
-  userIcon.className = "bi bi-person-circle";
-
-  const userName = document.createElement('span');
-
   const postDate = document.createElement('h6');
   postDate.className = "fs-6 text-secondary";
   postDate.textContent = getTimeDiffStr(props.createdAt);
@@ -38,15 +34,14 @@ const jobCardHeader = (props) => {
                         .fetchResult();
 
   fetchResult.then(data => {
-      userName.textContent = " " + data.name;
-      
+      const userHandle = UserHandle(data.name);
+      cardHeader.append(userHandle, postDate);
     })
     .catch(e => {
       alert("something went wrong");
       console.log(e);
     })
 
-  cardHeader.append(userIcon, userName, postDate);
   return cardHeader;
 }
 
@@ -74,7 +69,16 @@ const jobCardBody = (props) => {
   // Add event listener in main.js would cause bugs
   seeLikesBtn.addEventListener('click', () => {
     const wrapper = document.createElement('div');
-    wrapper.textContent = props.likes.length == 0 ? "There are currently no likes" : "There are likes";
+    if (props.likes.length == 0) {
+      wrapper.textContent = "There are currently no likes";
+    } else {
+      wrapper.appendChild(UserHandle(props.likes[0].userName));
+      props.likes.slice(1).forEach(l => {
+        wrapper.appendChild(document.createElement('hr'));
+        wrapper.appendChild(UserHandle(l.userName));
+      });
+    }
+
     setModalContent("Likes", wrapper);
   });
 

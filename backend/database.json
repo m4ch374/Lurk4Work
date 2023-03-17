@@ -170,15 +170,14 @@
       "start": "2011-10-05T14:48:00.000Z",
       "description": "Dedicated technical wizard with a passion and interest in human relationships",
       "createdAt": "2022-03-06T01:30:15.850Z",
-      "likes": {},
+      "likes": {
+        "30684": true,
+        "65687": true
+      },
       "comments": [
         {
           "userId": "65687",
           "comment": "Hello there"
-        },
-        {
-          "userId": "95112",
-          "comment": "Hello there2"
         }
       ]
     },
@@ -191,16 +190,7 @@
       "description": "Dedicated technical wizard with a passion and interest in human relationships",
       "createdAt": "2022-03-06T01:30:15.850Z",
       "likes": {},
-      "comments": [
-        {
-          "userId": "65687",
-          "comment": "Hello there"
-        },
-        {
-          "userId": "95112",
-          "comment": "Hello there2"
-        }
-      ]
+      "comments": []
     }
   },
   "nextMessageId": 1
