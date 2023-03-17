@@ -1,3 +1,4 @@
+import Feed from './component/feed.js';
 import { getElem } from './helpers.js';
 import router from './router.js';
 
@@ -39,6 +40,9 @@ const main = () => {
     const resultElem = router(window.location.hash.slice(1));
     mainBody.appendChild(resultElem);
   });
+
+  // Default to feed
+  document.querySelector('main').appendChild(Feed());
 }
 
 main();
