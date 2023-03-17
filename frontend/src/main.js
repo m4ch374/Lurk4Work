@@ -28,6 +28,12 @@ const checkIntegrety = () => {
   }
 }
 
+const closeCollapseMenu = () => {
+  const collapseMenu = document.querySelector('.nav-collapsed-menu');
+  collapseMenu.style.width = "0px";
+  collapseMenu.style.display = "none";
+}
+
 const main = () => {
   let currLoadIdx = 0;
 
@@ -46,6 +52,27 @@ const main = () => {
     if (scrollToBottom) {
       currLoadIdx += POSTS_PER_LOAD;
       setTimeout(populateFeed(currLoadIdx), 1000) // To create an illusion
+    }
+  });
+
+  // Collapsable button
+  getElem('nav-toggle-btn').addEventListener('click', () => {
+    const collapseMenu = document.querySelector('.nav-collapsed-menu');
+    const computedStyle = window.getComputedStyle(collapseMenu);
+
+    if (computedStyle.getPropertyValue("display") === "none") {
+      collapseMenu.style.display = "block";
+      collapseMenu.style.width = "150px";
+    } else {
+      closeCollapseMenu();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const collapseMenu = document.querySelector('.nav-collapsed-menu');
+
+    if (!collapseMenu.contains(e.target) && !getElem('nav-toggle-btn').contains(e.target)) {
+      closeCollapseMenu();
     }
   });
 }

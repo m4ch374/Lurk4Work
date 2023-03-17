@@ -14,6 +14,38 @@
     background-color: #f0f0f0;
 }
 
+.nav-bar-container {
+    max-width: 1200px;
+}
+
+.nav-collapsed-menu {
+    position: fixed;
+    top: 75px;
+    right: 20px;
+    width: 0px;
+    background-color: #2c2c2c;
+    padding: 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+.collapsed-menu-btn {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    width: 100%;
+    margin: 0;
+    text-align: start;
+}
+
+.collapsed-menu-btn:hover {
+    background-color: #3c3c3c;
+}
+
+.content-offset {
+    padding-top: 70px;
+}
+
 .modal-custom-height {
     max-height: 500px;
 }

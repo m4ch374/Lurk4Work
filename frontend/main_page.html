@@ -15,41 +15,69 @@
 </head>
 <body>
 
-  <div class="modal fade" id="placeholder-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable text-black">
-      <div class="modal-content modal-custom-height">
-        <div class="modal-header">
-          <h5 class="modal-title fs-5" id="placeholder-title">placeholder</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="placeholder-body">
-          <!-- <div>
-            <div>
-              <i class="bi bi-person-fill"></i>
-              <span>Name</span>
-            </div>
-            <div>
-              Lorem ipsum dolor sit amet
-            </div>
+  <!-- Turns out still have to code most of the nav bar, disappointed -->
+  <header>
+    <nav class="navbar fixed-top navbar-dark bg-body-tertiary justify-content-center" data-bs-theme="dark">
+      <div class="d-flex px-4 nav-bar-container align-items-center w-100">
+        <a class="navbar-brand" href="#">Lurk4Work</a>
+        <div class="d-md-none d-flex flex-fill justify-content-end">
+          <button type="button" class="btn btn-outline-secondary mx-2">
+            <i class="bi bi-clipboard-plus"></i>
+          </button>
+          <button type="button" class="btn btn-outline-secondary" id="nav-toggle-btn" type="button">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="nav-collapsed-menu">
+            <button type="button" class="collapsed-menu-btn">View Profile</button>
+            <button type="button" class="collapsed-menu-btn">New Post</button>
+            <button type="button" class="collapsed-menu-btn">Logout</button>
           </div>
+        </div>
+        <div class="d-none d-md-flex flex-fill justify-content-end">
+          <button type="button" class="mx-2 btn btn-outline-success">New Post</button>
+          <button type="button" class="mx-2 btn btn-primary">View Profile</button>
+          <button type="button" class="mx-2 btn btn-secondary">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-          <hr>
-
-          <div>
-            <div>
-              <i class="bi bi-person-fill"></i>
-              <span>Name</span>
+  <main class="d-flex flex-column align-items-center content-offset" id="feed">
+    <div class="modal fade" id="placeholder-modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable text-black">
+        <div class="modal-content modal-custom-height">
+          <div class="modal-header">
+            <h5 class="modal-title fs-5" id="placeholder-title">placeholder</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="placeholder-body">
+            <!-- <div>
+              <div>
+                <i class="bi bi-person-fill"></i>
+                <span>Name</span>
+              </div>
+              <div>
+                Lorem ipsum dolor sit amet
+              </div>
             </div>
+  
+            <hr>
+  
             <div>
-              Lorem ipsum dolor sit amet
-            </div>
-          </div> -->
+              <div>
+                <i class="bi bi-person-fill"></i>
+                <span>Name</span>
+              </div>
+              <div>
+                Lorem ipsum dolor sit amet
+              </div>
+            </div> -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <main class="d-flex flex-column align-items-center mt-4" id="feed">
 		<div class="job-card p-4 pb-3 rounded-3 bg-white text-black mb-4" id="auth-form">
       <div class="fs-3">
         <i class="bi bi-person-circle"></i>
