@@ -1,6 +1,7 @@
 import Feed from './component/feed.js';
 import { getElem } from './helpers.js';
 import router from './router.js';
+import { checkIntegrety } from './helpers.js';
 
 const closeCollapseMenu = () => {
   const collapseMenu = document.querySelector('.nav-collapsed-menu');
@@ -32,6 +33,8 @@ const main = () => {
 
   // Hash routing
   window.addEventListener('hashchange', () => {
+    checkIntegrety();
+
     const mainBody = document.querySelector('main');
     while (mainBody.firstChild) {
       mainBody.removeChild(mainBody.firstChild);
@@ -42,6 +45,7 @@ const main = () => {
   });
 
   // Default to feed
+  checkIntegrety();
   document.querySelector('main').appendChild(Feed());
 }
 

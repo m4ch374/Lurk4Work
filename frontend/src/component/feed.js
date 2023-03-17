@@ -1,11 +1,9 @@
 import jobCard from './job_card.js';
 import { JOB_FEED_ROUTE, POSTS_PER_LOAD } from '../config.js';
 import Fetcher from '../fetcher.js';
-import { getElem } from '../helpers.js';
+import { getElem, checkIntegrety } from '../helpers.js';
 
 const populateFeed = (startIdx) => {
-  checkIntegrety();
-
   const fetchResult = Fetcher.get(JOB_FEED_ROUTE)
                       .withQuery("start", startIdx)
                       .withLocalStorageToken()
@@ -21,16 +19,10 @@ const populateFeed = (startIdx) => {
     });
 }
 
-const checkIntegrety = () => {
-  if (!'token' in localStorage) {
-    alert("Cannot access main page without logging in");
-    window.location.href = "../index.html";
-  }
-}
-
 const runScript = () => {
-  let currLoadIdx = 0;
+  checkIntegrety();
 
+  let currLoadIdx = 0;
   populateFeed(currLoadIdx);
 
   // Listens for client scrolling to the bottom of the page

@@ -45,4 +45,11 @@ const getTimeDiffStr = (timeStr) => {
 	return hrs > 24 ? targetDate.toLocaleDateString('en-AU') : `${hrs}h ${mins}m ago`;
 }
 
-export {getElem, getTimeDiffStr};
+const checkIntegrety = () => {
+  if (!'token' in localStorage) {
+    alert("Cannot access main page without logging in");
+    window.location.href = "../index.html";
+  }
+}
+
+export {getElem, getTimeDiffStr, checkIntegrety};
