@@ -51,6 +51,10 @@ class Fetcher {
   static post(path) {
     return new Fetcher("POST", path);
   }
+
+  static put(path) {
+    return new Fetcher("PUT", path);
+  }
 }
 
 export default Fetcher;

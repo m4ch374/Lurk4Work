@@ -1,19 +1,19 @@
-import jobCard from './component/job_card.js';
-import { JOB_FEED_ROUTE } from './config.js';
+import JobCard from './component/job_card.js';
+import { JOB_FEED_ROUTE, POSTS_PER_LOAD } from './config.js';
 import Fetcher from './fetcher.js';
+import { getElem } from './helpers.js';
 
-// Executed at the very end of the file
-const populateFeed = () => {
+const populateFeed = (startIdx) => {
   checkIntegrety();
 
   const fetchResult = Fetcher.get(JOB_FEED_ROUTE)
-                      .withQuery("start", 0)
+                      .withQuery("start", startIdx)
                       .withLocalStorageToken()
                       .fetchResult();
 
   fetchResult.then(data => {
-      const feed = document.querySelector('#feed');
-      data.forEach(d => feed.appendChild(jobCard(d)));
+      const feed = getElem('feed');
+      data.forEach(d => feed.appendChild(JobCard(d)));
     })
     .catch(e => {
       alert("something went wrong");
@@ -28,4 +28,26 @@ const checkIntegrety = () => {
   }
 }
 
-populateFeed();
+const main = () => {
+  let currLoadIdx = 0;
+
+  populateFeed(currLoadIdx);
+
+  // Listens for client scrolling to the bottom of the page
+  document.addEventListener('scroll', () => {
+    const docElem = document.documentElement;
+
+    const totalHeight = docElem.scrollHeight;
+    const clientHeight = docElem.scrollTop + docElem.clientHeight;
+
+    const detectionOffset = 2;
+    const scrollToBottom = clientHeight > (totalHeight - detectionOffset);
+
+    if (scrollToBottom) {
+      currLoadIdx += POSTS_PER_LOAD;
+      setTimeout(populateFeed(currLoadIdx), 1000) // To create an illusion
+    }
+  });
+}
+
+main();

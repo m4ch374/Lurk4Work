@@ -30,14 +30,19 @@ export function fileToDataUrl(file) {
 	return dataUrlPromise;
 }
 
-export function getTimeDiffStr(timeStr) {
+// Gets an element by it's id
+const getElem = (elemId) => {
+  return document.querySelector(`#${elemId}`);
+}
+
+const getTimeDiffStr = (timeStr) => {
 	const targetDate = new Date(timeStr);
 	const diff = new Date().getTime() - targetDate.getTime();
 
 	const hrs = Math.floor(diff / (1000 * 60 * 60));
 	const mins = Math.floor((diff / (1000 * 60)) % 60);
 
-	console.log(hrs);
-
 	return hrs > 24 ? targetDate.toLocaleDateString('en-AU') : `${hrs}h ${mins}m ago`;
 }
+
+export {getElem, getTimeDiffStr};

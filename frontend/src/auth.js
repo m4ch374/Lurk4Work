@@ -1,9 +1,6 @@
-import { LOGIN_ROUTE, REGISTER_ROUTE, SERVER_ROUTE } from "./config.js";
+import { LOGIN_ROUTE, REGISTER_ROUTE } from "./config.js";
 import Fetcher from "./fetcher.js";
-
-const getElem = (elemId) => {
-  return document.querySelector(`#${elemId}`);
-}
+import { getElem } from "./helpers.js";
 
 // Introduces bugs if user changes the Html in development tool
 // Therefore assuming users are monke 
@@ -76,6 +73,7 @@ getElem('auth-form').addEventListener('submit', (e) => {
       } else {
         // redirect
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId);
         window.location.href = "../main_page.html";
       }
     })

@@ -17,3 +17,5 @@ export const JOB_LIKE_ROUTE     = "/job/like";
 export const USER_ROUTE         = "/user";
 
 export const USER_WATCH_ROUTE   = "/user/watch";
+
+export const POSTS_PER_LOAD     = 5;
