@@ -31,8 +31,8 @@ export function fileToDataUrl(file) {
 }
 
 // Gets an element by it's id
-const getElem = (elemId) => {
-  return document.querySelector(`#${elemId}`);
+const getElem = (elemId, parent) => {
+  return parent.querySelector(`#${elemId}`);
 }
 
 const getTimeDiffStr = (timeStr) => {
@@ -48,7 +48,7 @@ const getTimeDiffStr = (timeStr) => {
 const checkIntegrety = () => {
   if (!'token' in localStorage) {
     alert("Cannot access main page without logging in");
-    window.location.href = "../index.html";
+    window.location.hash = "#";
   }
 }
 

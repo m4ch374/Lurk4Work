@@ -11,3 +11,7 @@ html, body {
 .header-size {
     font-size: 40px;
 }
+
+.content-offset {
+    padding-top: 70px;
+}
