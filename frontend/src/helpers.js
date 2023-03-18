@@ -18,13 +18,13 @@ export function fileToDataUrl(file) {
 	const valid = validFileTypes.find(type => type === file.type);
 	// Bad data, let's walk away.
 	if (!valid) {
-			throw Error('provided file is not a png, jpg or jpeg image.');
+		throw Error('provided file is not a png, jpg or jpeg image.');
 	}
 	
 	const reader = new FileReader();
 	const dataUrlPromise = new Promise((resolve,reject) => {
-			reader.onerror = reject;
-			reader.onload = () => resolve(reader.result);
+		reader.onerror = reject;
+		reader.onload = () => resolve(reader.result);
 	});
 	reader.readAsDataURL(file);
 	return dataUrlPromise;
@@ -62,4 +62,15 @@ const setBootstrapModalContent = (title, content) => {
   placeholderBody.appendChild(content);
 }
 
-export {getElem, getTimeDiffStr, checkIntegrety, setBootstrapModalContent};
+const linkBtnToModal = (btn, modalName) => {
+  btn.setAttribute("data-bs-toggle", "modal");
+  btn.setAttribute("data-bs-target", `#${modalName}`);
+}
+
+export {
+	getElem, 
+	getTimeDiffStr, 
+	checkIntegrety, 
+	setBootstrapModalContent,
+	linkBtnToModal
+};

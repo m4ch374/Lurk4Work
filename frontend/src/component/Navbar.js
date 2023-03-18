@@ -1,4 +1,5 @@
-import { getElem } from "../helpers.js";
+import { getElem, linkBtnToModal, setBootstrapModalContent } from "../helpers.js";
+import BootstrapModal from "./bootstrap_modal.js";
 
 const closeCollapseMenu = (menu) => {
   const collapseMenu = menu.querySelector('.nav-collapsed-menu');
@@ -18,6 +19,12 @@ const hydration = (menu) => {
     } else {
       closeCollapseMenu(menu);
     }
+  });
+
+  menu.querySelectorAll('.create-new-post').forEach(e => {
+    e.addEventListener('click', () => {
+      setBootstrapModalContent("New Post", document.createElement('div'));
+    });
   });
 
   document.addEventListener('click', (e) => {
@@ -53,7 +60,8 @@ const CollpasedItem = () => {
 
   const newPostBtn = document.createElement('button');
   newPostBtn.type = "button";
-  newPostBtn.className = "btn btn-outline-secondary mx-2"
+  newPostBtn.className = "btn btn-outline-secondary mx-2 create-new-post"
+  linkBtnToModal(newPostBtn, "placeholder-modal");
 
   const newPostBtnIcon = document.createElement('i');
   newPostBtnIcon.className = "bi bi-clipboard-plus";
@@ -77,7 +85,9 @@ const CollpasedItem = () => {
                         "collapsed-menu-btn", 
                         `#profile=${localStorage.getItem('userId')}`
                       );
-  const newPostLink = ItemBtn("New Post", "collapsed-menu-btn");
+  const newPostLink = ItemBtn("New Post", "collapsed-menu-btn create-new-post");
+  linkBtnToModal(newPostLink, "placeholder-modal");
+
   const logoutBtn = ItemBtn("Logout", "collapsed-menu-btn", "#");
 
   collapsedMenu.append(profileLink, newPostLink, logoutBtn);
@@ -106,7 +116,9 @@ const Navbar = () => {
   const uncollapsedBtnGrp = document.createElement('div');
   uncollapsedBtnGrp.className = "d-none d-md-flex flex-fill justify-content-end";
 
-  const newPostBtn = ItemBtn("New Post", "mx-2 btn btn-outline-success");
+  const newPostBtn = ItemBtn("New Post", "mx-2 btn btn-outline-success create-new-post");
+  linkBtnToModal(newPostBtn, "placeholder-modal");
+
   const viewProfileBtn = ItemBtn("View Profile",
                           "mx-2 btn btn-primary",
                           `#profile=${localStorage.getItem('userId')}`
@@ -120,6 +132,7 @@ const Navbar = () => {
   nav.appendChild(navContainer);
 
   navbar.appendChild(nav);
+  navbar.appendChild(BootstrapModal());
   hydration(navbar);
   return navbar;
 }

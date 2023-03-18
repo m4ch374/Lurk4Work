@@ -1,9 +1,13 @@
 // Not letting us use react is a war crime
 import { JOB_LIKE_ROUTE, USER_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
-import { getTimeDiffStr, setBootstrapModalContent } from "../helpers.js";
 import Comment from "./comment.js";
 import UserHandle from "./user_handle.js";
+import { 
+  getTimeDiffStr, 
+  setBootstrapModalContent,
+  linkBtnToModal 
+} from "../helpers.js";
 
 const hydration = (jobCard, props) => {
   jobCard.querySelector('.see-like-btn').addEventListener('click', () => {
@@ -61,11 +65,6 @@ const hydration = (jobCard, props) => {
 
     setBootstrapModalContent("Comments", commentSection);
   });
-}
-
-const linkBtnToModal = (btn, modalName) => {
-  btn.setAttribute("data-bs-toggle", "modal");
-  btn.setAttribute("data-bs-target", `#${modalName}`);
 }
 
 const jobCardHeader = (props) => {
