@@ -13,7 +13,6 @@ const removeChildren = () => {
 const route = () => {
   // Hash route wont be case sensitive
   const hash = window.location.hash.slice(1).toLowerCase();
-  console.log(hash);
 
   removeChildren();
 
@@ -33,7 +32,6 @@ const route = () => {
 
 const main = () => {
   window.addEventListener('hashchange', () => {
-    console.log('hi');
     route();
   });
 

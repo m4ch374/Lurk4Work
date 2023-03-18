@@ -98,7 +98,7 @@ const Navbar = () => {
 
   const navBrand = document.createElement('a');
   navBrand.className = "navbar-brand";
-  navBrand.href = "#";
+  navBrand.href = "#feed";
   navBrand.textContent = "Lurk4Work";
 
   const collapseditem = CollpasedItem();

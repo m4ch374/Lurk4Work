@@ -31,7 +31,7 @@ export function fileToDataUrl(file) {
 }
 
 // Gets an element by it's id
-const getElem = (elemId, parent) => {
+const getElem = (elemId, parent=document) => {
   return parent.querySelector(`#${elemId}`);
 }
 
@@ -52,4 +52,14 @@ const checkIntegrety = () => {
   }
 }
 
-export {getElem, getTimeDiffStr, checkIntegrety};
+const setBootstrapModalContent = (title, content) => {
+  getElem('placeholder-title').textContent = title;
+
+  const placeholderBody = getElem('placeholder-body');
+  while (placeholderBody.firstChild) {
+    placeholderBody.removeChild(placeholderBody.firstChild);
+  }
+  placeholderBody.appendChild(content);
+}
+
+export {getElem, getTimeDiffStr, checkIntegrety, setBootstrapModalContent};
