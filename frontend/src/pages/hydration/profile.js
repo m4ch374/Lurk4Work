@@ -3,6 +3,7 @@ import { USER_ROUTE, USER_WATCH_ROUTE } from "../../config.js";
 import { fileToDataUrl, getElem, linkBtnToModal, setBootstrapModalContent } from "../../helpers.js";
 import Fetcher from "../../fetcher.js";
 import UserHandle from "../../component/user_handle.js";
+import FormField from "../../component/form_field.js";
 
 const toggleWatched = (page) => {
   const watchBtn = getElem("overview-watch-btn", page);
@@ -57,57 +58,10 @@ const hydrateProfile = (page, props) => {
     editBtn.addEventListener('click', () => {
       const form = document.createElement('form');
 
-      const emailField = document.createElement('div');
-      emailField.className = "mb-3";
-      
-      const emailLabel = document.createElement('label');
-      emailLabel.className = "form-label";
-      emailLabel.textContent = "Email";
-
-      const emailInput = document.createElement('input');
-      emailInput.type = "email";
-      emailInput.className = "form-control";
-
-      emailField.append(emailLabel, emailInput);
-
-      const passwordField = document.createElement('div');
-      passwordField.className = "mb-3";
-      
-      const passwordLabel = document.createElement('label');
-      passwordLabel.className = "form-label";
-      passwordLabel.textContent = "Password";
-
-      const passwordInput = document.createElement('input');
-      passwordInput.type = "password";
-      passwordInput.className = "form-control";
-
-      passwordField.append(passwordLabel, passwordInput);
-
-      const nameField = document.createElement('div');
-      nameField.className = "mb-3";
-      
-      const nameLabel = document.createElement('label');
-      nameLabel.className = "form-label";
-      nameLabel.textContent = "Name";
-
-      const nameInput = document.createElement('input');
-      nameInput.type = "text";
-      nameInput.className = "form-control";
-
-      nameField.append(nameLabel, nameInput);
-
-      const fileField = document.createElement('div');
-      fileField.className = "mb-3";
-      
-      const fileLabel = document.createElement('label');
-      fileLabel.className = "form-label";
-      fileLabel.textContent = "Profile Image";
-
-      const fileInput = document.createElement('input');
-      fileInput.type = "file";
-      fileInput.className = "form-control";
-
-      fileField.append(fileLabel, fileInput);
+      const emailField = FormField("Email address", "email", "profile-edit-email");
+      const passwordField = FormField("Password", "password", "profile-edit-password");
+      const nameField = FormField("Name", "text", "profile-edit-name");
+      const fileField = FormField("Profile Image", "file", "profile-edit-file");
 
       const submitBtn = document.createElement('button');
       submitBtn.type = "submit";
@@ -116,16 +70,13 @@ const hydrateProfile = (page, props) => {
       linkBtnToModal(submitBtn, "placeholder-modal");
 
       submitBtn.addEventListener('click', () => {
-        let fileUrl = ""
-
         try {
-          fileToDataUrl(fileInput.files[0]).then(data => {
-            fileUrl = data;
+          fileToDataUrl(getElem("profile-edit-file", fileField).files[0]).then(data => {
             const payload = {
-              "email": emailInput.value,
-              "password": passwordInput.value,
-              "name": nameInput.value,
-              "image": fileUrl,
+              "email": getElem("profile-edit-email", emailField).value,
+              "password": getElem("profile-edit-password", passwordField).value,
+              "name": getElem("profile-edit-name", nameField).value,
+              "image": data,
             }
     
             console.log(payload);
@@ -142,11 +93,8 @@ const hydrateProfile = (page, props) => {
             });
           });
         } catch (e) {
-          fileUrl = "";
           alert(e);
           console.log(e);
-        } finally {
-          
         }
       });
 

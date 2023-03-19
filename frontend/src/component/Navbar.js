@@ -2,6 +2,7 @@ import { USER_WATCH_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
 import { getElem, linkBtnToModal, setBootstrapModalContent } from "../helpers.js";
 import BootstrapModal from "./bootstrap_modal.js";
+import FormField from "./form_field.js";
 
 const closeCollapseMenu = (menu) => {
   const collapseMenu = menu.querySelector('.nav-collapsed-menu');
@@ -25,6 +26,8 @@ const hydration = (menu) => {
 
   menu.querySelectorAll('.create-new-post').forEach(e => {
     e.addEventListener('click', () => {
+
+
       setBootstrapModalContent("New Post", document.createElement('div'));
     });
   });
@@ -33,17 +36,7 @@ const hydration = (menu) => {
     e.addEventListener('click', () => {
       const form = document.createElement('form');
 
-      const emailField = document.createElement('div');
-      emailField.className = "mb-3";
-      
-      const emailLabel = document.createElement('label');
-      emailLabel.className = "form-label";
-      emailLabel.textContent = "Email address";
-
-      const emailInput = document.createElement('input');
-      emailInput.className = "form-control";
-
-      emailField.append(emailLabel, emailInput);
+      const emailField = FormField("Email address", "email", 'nav-watch-email-input');
 
       const submitBtn = document.createElement('button');
       submitBtn.type = "submit";
@@ -59,7 +52,7 @@ const hydration = (menu) => {
         const result = Fetcher.put(USER_WATCH_ROUTE)
                         .withLocalStorageToken()
                         .withJsonPayload({
-                          "email": emailInput.value,
+                          "email": getElem('nav-watch-email-input', emailField).value,
                           "turnon": true,
                         })
                         .fetchResult();

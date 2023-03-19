@@ -2,6 +2,7 @@
 
 // Exhibit 1:
 import AuthErrorModal from "../component/auth_error_modal.js";
+import FormField from "../component/form_field.js";
 import { hydrateAuth } from "./hydration/auth.js";
 
 const Prompt = (id=undefined) => {
@@ -76,9 +77,12 @@ const AuthPage = () => {
   authHeader.id = "auth-header";
   authHeader.textContent = "Login";
 
-  const namePrompt = NamePrompt();
-  const emailPrompt = EmailPrompt();
-  const passwordPrompt = PasswordPrompt();
+  const namePrompt = FormField("Name", "text", "name-input");
+  namePrompt.id = "name-prompt";
+  namePrompt.hidden = true;
+
+  const emailPrompt = FormField("Email address", "email", "email-input");
+  const passwordPrompt = FormField("Password", "password", "password-input");
 
   const submitBtn = document.createElement('button');
   submitBtn.type = "submit";
