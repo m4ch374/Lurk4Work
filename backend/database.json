@@ -52,7 +52,12 @@
       "description": "Fly the F4-S Phantom II",
       "createdAt": "2023-03-19T15:27:45.660Z",
       "likes": {},
-      "comments": []
+      "comments": [
+        {
+          "userId": "97467",
+          "comment": "F4-J is better frfr"
+        }
+      ]
     },
     "865060": {
       "id": "865060",

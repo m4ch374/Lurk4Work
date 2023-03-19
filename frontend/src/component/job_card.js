@@ -1,5 +1,5 @@
 // Not letting us use react is a war crime
-import { JOB_LIKE_ROUTE, JOB_ROUTE } from "../config.js";
+import { JOB_COMMENT_ROUTE, JOB_LIKE_ROUTE, JOB_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
 import Comment from "./comment.js";
 import UserHandle from "./user_handle.js";
@@ -49,7 +49,7 @@ const hydration = (jobCard, props) => {
       .catch(e => {
         alert("something went wrong");
         console.log(e);
-      })
+      });
   });
 
   jobCard.querySelector('.job-card-comment-btn').addEventListener('click', () => {
@@ -65,7 +65,44 @@ const hydration = (jobCard, props) => {
       });
     }
 
+    const commentForm = document.createElement('form');
+    commentForm.className = "mt-3";
+
+    const commentField = document.createElement('div');
+    commentField.className = "input-group mb-3";
+
+    const commentInput = document.createElement('input');
+    commentInput.type = "text";
+    commentInput.className = "form-control";
+
+    const commentBtn = document.createElement('button');
+    commentBtn.className = "btn btn-outline-secondary";
+    commentBtn.textContent = "Send";
+    linkBtnToModal(commentBtn, "placeholder-modal");
+
+    commentField.append(commentInput, commentBtn);
+    commentForm.appendChild(commentField);
+    commentSection.appendChild(commentForm);
+
     setBootstrapModalContent("Comments", commentSection);
+
+    commentBtn.addEventListener('click', () => {
+      const payload = {
+        "id": jobCard.id,
+        "comment": commentInput.value,
+      };
+
+      const result = Fetcher.post(JOB_COMMENT_ROUTE)
+                      .withLocalStorageToken()
+                      .withJsonPayload(payload)
+                      .fetchResult();
+
+      result.then(data => {
+          if (data.error) {
+            alert(data.error);
+          }
+        });
+    });
   });
 
   getElem('post-edit-btn', jobCard)?.addEventListener('click', () => {
