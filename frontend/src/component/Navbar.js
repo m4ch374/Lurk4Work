@@ -1,3 +1,5 @@
+import { USER_WATCH_ROUTE } from "../config.js";
+import Fetcher from "../fetcher.js";
 import { getElem, linkBtnToModal, setBootstrapModalContent } from "../helpers.js";
 import BootstrapModal from "./bootstrap_modal.js";
 
@@ -24,6 +26,50 @@ const hydration = (menu) => {
   menu.querySelectorAll('.create-new-post').forEach(e => {
     e.addEventListener('click', () => {
       setBootstrapModalContent("New Post", document.createElement('div'));
+    });
+  });
+
+  menu.querySelectorAll('.nav-watch-btn').forEach(e => {
+    e.addEventListener('click', () => {
+      const form = document.createElement('form');
+
+      const emailField = document.createElement('div');
+      emailField.className = "mb-3";
+      
+      const emailLabel = document.createElement('label');
+      emailLabel.className = "form-label";
+      emailLabel.textContent = "Email address";
+
+      const emailInput = document.createElement('input');
+      emailInput.className = "form-control";
+
+      emailField.append(emailLabel, emailInput);
+
+      const submitBtn = document.createElement('button');
+      submitBtn.type = "submit";
+      submitBtn.className = "btn btn-primary";
+      submitBtn.textContent = "Watch";
+      linkBtnToModal(submitBtn, "placeholder-modal");
+
+      form.append(emailField, submitBtn);
+
+      setBootstrapModalContent("Enter watcher email", form);
+
+      submitBtn.addEventListener('click', () => {
+        const result = Fetcher.put(USER_WATCH_ROUTE)
+                        .withLocalStorageToken()
+                        .withJsonPayload({
+                          "email": emailInput.value,
+                          "turnon": true,
+                        })
+                        .fetchResult();
+
+        result.then(data => {
+          if (data.error) {
+            alert(data.error);
+          }
+        });
+      });
     });
   });
 
@@ -81,6 +127,9 @@ const CollpasedItem = () => {
   const collapsedMenu = document.createElement('div');
   collapsedMenu.className = "nav-collapsed-menu";
 
+  const watchPromptBtn = ItemBtn("Watch", "collapsed-menu-btn nav-watch-btn");
+  linkBtnToModal(watchPromptBtn, "placeholder-modal");
+
   const profileLink = ItemBtn("View Profile", 
                         "collapsed-menu-btn", 
                         `#profile=${localStorage.getItem('userId')}`
@@ -90,7 +139,7 @@ const CollpasedItem = () => {
 
   const logoutBtn = ItemBtn("Logout", "collapsed-menu-btn", "#");
 
-  collapsedMenu.append(profileLink, newPostLink, logoutBtn);
+  collapsedMenu.append(watchPromptBtn, profileLink, newPostLink, logoutBtn);
 
   collapsedItem.append(newPostBtn, collapsedMenuBtn, collapsedMenu);
   return collapsedItem;
@@ -116,6 +165,9 @@ const Navbar = () => {
   const uncollapsedBtnGrp = document.createElement('div');
   uncollapsedBtnGrp.className = "d-none d-md-flex flex-fill justify-content-end";
 
+  const watchBtn = ItemBtn("Watch", "mx-2 btn btn-outline-secondary nav-watch-btn");
+  linkBtnToModal(watchBtn, "placeholder-modal");
+
   const newPostBtn = ItemBtn("New Post", "mx-2 btn btn-outline-success create-new-post");
   linkBtnToModal(newPostBtn, "placeholder-modal");
 
@@ -123,9 +175,9 @@ const Navbar = () => {
                           "mx-2 btn btn-primary",
                           `#profile=${localStorage.getItem('userId')}`
                         );
-  const logoutBtn = ItemBtn("Logout", "mx-2 btn btn-secondary", "#");
+  const logoutBtn = ItemBtn("Logout", "mx-2 btn btn-danger", "#");
 
-  uncollapsedBtnGrp.append(newPostBtn, viewProfileBtn, logoutBtn);
+  uncollapsedBtnGrp.append(watchBtn, newPostBtn, viewProfileBtn, logoutBtn);
 
   navContainer.append(navBrand, collapseditem, uncollapsedBtnGrp);
 

@@ -1,3 +1,6 @@
+// Welcome to not using React war crime
+
+// Exhibit 1:
 import AuthErrorModal from "../component/auth_error_modal.js";
 import { hydrateAuth } from "./hydration/auth.js";
 

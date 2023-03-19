@@ -1,6 +1,7 @@
 import { checkIntegrety } from "./helpers.js";
 import AuthPage from "./pages/auth_page.js";
 import FeedPage from "./pages/feed_page.js";
+import ProfilePage from "./pages/profile_page.js";
 
 const removeChildren = () => {
   const body = document.querySelector('body');
@@ -26,6 +27,18 @@ const route = () => {
 
   if (hash === "feed") {
     body.appendChild(FeedPage());
+    return;
+  }
+
+  if (hash.startsWith("profile")) {
+    const rawQuery = hash.substring("profile".length);
+
+    if (rawQuery === "" || rawQuery.slice(1) === "") {
+      body.appendChild(ProfilePage());
+    } else {
+      body.appendChild(ProfilePage(rawQuery.slice(1)));
+    }
+
     return;
   }
 }

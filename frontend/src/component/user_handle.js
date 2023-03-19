@@ -2,8 +2,9 @@ import { USER_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
 
 const UserHandle = (user_id) => {
-  const handle = document.createElement('button');
-  handle.className = "d-flex align-items-center gap-1 bg-white border-0 m-0 p-0";
+  const handle = document.createElement('a');
+  handle.className = "d-flex align-items-center gap-1 text-black text-decoration-none m-0 p-0";
+  handle.href = `#profile=${user_id}`;
 
   const userName = document.createElement('span');
 

@@ -2,6 +2,10 @@
     margin-left: 15%;
 }
 
+.profile-pic-default {
+    font-size: 100px;
+}
+
 .profile-pic {
     width: 100px;
     aspect-ratio: 1/1;
