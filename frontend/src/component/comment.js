@@ -3,7 +3,7 @@ import UserHandle from "./user_handle.js";
 const Comment = (props) => {
   const commentDiv = document.createElement('div');
 
-  const commentBy = UserHandle(props.userName);
+  const commentBy = UserHandle(props.userId);
 
   const userComment = document.createElement('div');
   userComment.textContent = props.comment;

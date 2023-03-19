@@ -1,5 +1,5 @@
 // Not letting us use react is a war crime
-import { JOB_LIKE_ROUTE, USER_ROUTE } from "../config.js";
+import { JOB_LIKE_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
 import Comment from "./comment.js";
 import UserHandle from "./user_handle.js";
@@ -15,10 +15,10 @@ const hydration = (jobCard, props) => {
     if (props.likes.length == 0) {
       wrapper.textContent = "There are currently no likes";
     } else {
-      wrapper.appendChild(UserHandle(props.likes[0].userName));
+      wrapper.appendChild(UserHandle(props.likes[0].userId));
       props.likes.slice(1).forEach(l => {
         wrapper.appendChild(document.createElement('hr'));
-        wrapper.appendChild(UserHandle(l.userName));
+        wrapper.appendChild(UserHandle(l.userId));
       });
     }
 
@@ -75,28 +75,19 @@ const jobCardHeader = (props) => {
   postDate.className = "fs-6 text-secondary";
   postDate.textContent = getTimeDiffStr(props.createdAt);
 
-  const fetchResult = Fetcher.get(USER_ROUTE)
-                        .withLocalStorageToken()
-                        .withQuery("userId", props.creatorId)
-                        .fetchResult();
-
-  fetchResult.then(data => {
-      const userHandle = UserHandle(data.name);
-      cardHeader.append(userHandle, postDate);
-    })
-    .catch(e => {
-      alert("something went wrong");
-      console.log(e);
-    })
-
+  const userHandle = UserHandle(props.creatorId);
+  
+  cardHeader.append(userHandle, postDate);
   return cardHeader;
 }
 
 const jobCardBody = (props) => {
   const cardBody = document.createElement('div');
+  cardBody.className = "d-flex flex-column align-items-start";
 
   const jobImg = document.createElement('img');
   jobImg.src = props.image;
+  jobImg.className = "job-img object-fit-contain align-self-center";
 
   const jobTitle = document.createElement('h1');
   jobTitle.textContent = props.title;

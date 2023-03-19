@@ -6,6 +6,16 @@
     font-size: clamp(0.7rem, 2vw, 1rem);
 }
 
+.job-card-profile-pic {
+    width: 30px;
+    aspect-ratio: 1/1;
+}
+
+.job-img {
+    width: 50%;
+    height: 50%;
+}
+
 .see-like-btn {
     background-color: white;
 }
@@ -16,4 +26,11 @@
 
 .modal-custom-height {
     max-height: 500px;
+}
+
+@media screen and (max-width: 600px) {
+    .job-img {
+        width: 100%;
+        height: 100%;
+    }
 }
