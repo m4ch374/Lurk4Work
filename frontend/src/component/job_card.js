@@ -1,13 +1,15 @@
 // Not letting us use react is a war crime
-import { JOB_LIKE_ROUTE } from "../config.js";
+import { JOB_LIKE_ROUTE, JOB_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
 import Comment from "./comment.js";
 import UserHandle from "./user_handle.js";
 import { 
   getTimeDiffStr, 
   setBootstrapModalContent,
-  linkBtnToModal 
+  linkBtnToModal, 
+  getElem
 } from "../helpers.js";
+import NewPostForm from "./new_post_form.js";
 
 const hydration = (jobCard, props) => {
   jobCard.querySelector('.see-like-btn').addEventListener('click', () => {
@@ -65,19 +67,83 @@ const hydration = (jobCard, props) => {
 
     setBootstrapModalContent("Comments", commentSection);
   });
+
+  getElem('post-edit-btn', jobCard)?.addEventListener('click', () => {
+    setBootstrapModalContent("Edit Post", NewPostForm(jobCard.id));
+  });
+
+  getElem('post-delete-btn', jobCard)?.addEventListener('click', () => {
+    const wrapper = document.createElement('div');
+
+    const label = document.createElement('label');
+    label.className = "fs-4";
+    label.textContent = "Do you want to delete the post?";
+
+    const hr = document.createElement('hr');
+
+    const okBtn = document.createElement('button');
+    okBtn.className = "btn btn-danger d-block";
+    okBtn.textContent = "Delete";
+    linkBtnToModal(okBtn, "placeholder-modal");
+
+    wrapper.append(label, hr, okBtn);
+    setBootstrapModalContent("Delete Post", wrapper);
+
+    okBtn.addEventListener('click', () => {
+      const result = Fetcher.delete(JOB_ROUTE)
+                      .withLocalStorageToken()
+                      .withJsonPayload({
+                        "id": jobCard.id,
+                      })
+                      .fetchResult();
+
+      result.then(data => {
+          if (data.error) {
+            alert(data.error);
+          }
+        });
+    });
+  });
 }
 
 const jobCardHeader = (props) => {
   const cardHeader = document.createElement('div');
   cardHeader.className = "fs-3";
 
+  const userHandle = UserHandle(props.creatorId);
+
   const postDate = document.createElement('h6');
   postDate.className = "fs-6 text-secondary";
   postDate.textContent = getTimeDiffStr(props.createdAt);
-
-  const userHandle = UserHandle(props.creatorId);
   
   cardHeader.append(userHandle, postDate);
+
+  if (props.creatorId == localStorage.getItem('userId')) {
+    const editBtn = document.createElement('button');
+    editBtn.type = "button";
+    editBtn.className = "btn btn-outline-dark border-0 p-1 m-0";
+    editBtn.id = "post-edit-btn";
+
+    const editIcon = document.createElement('i');
+    editIcon.className = "bi bi-pencil-square";
+
+    editBtn.appendChild(editIcon);
+    linkBtnToModal(editBtn, "placeholder-modal");
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = "button";
+    deleteBtn.className = "btn btn-outline-danger border-0 p-1 m-0";
+    deleteBtn.id = "post-delete-btn";
+
+    const deleteIcon = document.createElement('i');
+    deleteIcon.className = "bi bi-trash";
+
+    deleteBtn.appendChild(deleteIcon);
+    linkBtnToModal(deleteBtn, "placeholder-modal");
+
+    cardHeader.append(editBtn, deleteBtn);
+  }
+
   return cardHeader;
 }
 
@@ -157,6 +223,8 @@ const jobCardFooter = (props) => {
 
 const JobCard = (props) => {
   const card = document.createElement('div');
+  card.id = props.id;
+
   // not using gaps to seperate cards bc there are some issues with it
   card.className = "job-card p-4 pb-3 rounded-3 bg-white text-black mb-4";
 
@@ -165,6 +233,7 @@ const JobCard = (props) => {
   const footer = jobCardFooter(props);
 
   const hr = document.createElement('hr');
+  hr.classList = "mt-0";
   const hr1 = document.createElement('hr');
   hr1.classList = "mt-1";
   

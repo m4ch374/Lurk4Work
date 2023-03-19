@@ -55,6 +55,10 @@ class Fetcher {
   static put(path) {
     return new Fetcher("PUT", path);
   }
+
+  static delete(path) {
+    return new Fetcher("DELETE", path);
+  }
 }
 
 export default Fetcher;
