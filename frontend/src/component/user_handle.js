@@ -17,7 +17,7 @@ const UserHandle = (user_id) => {
       userName.textContent = data.name;
       if (data.image) {
         userIcon = document.createElement('img');
-        userIcon.className = "job-card-profile-pic object-fit-contain align-self-center";
+        userIcon.className = "job-card-profile-pic object-fit-contain align-self-center rounded-circle";
         userIcon.src = data.image;
       } else {
         userIcon = document.createElement('i');
