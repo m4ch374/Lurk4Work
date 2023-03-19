@@ -3,6 +3,7 @@ import Fetcher from "../fetcher.js";
 import { getElem, linkBtnToModal, setBootstrapModalContent } from "../helpers.js";
 import BootstrapModal from "./bootstrap_modal.js";
 import FormField from "./form_field.js";
+import NewPostForm from "./new_post_form.js";
 
 const closeCollapseMenu = (menu) => {
   const collapseMenu = menu.querySelector('.nav-collapsed-menu');
@@ -26,9 +27,7 @@ const hydration = (menu) => {
 
   menu.querySelectorAll('.create-new-post').forEach(e => {
     e.addEventListener('click', () => {
-
-
-      setBootstrapModalContent("New Post", document.createElement('div'));
+      setBootstrapModalContent("New Post", NewPostForm());
     });
   });
 
