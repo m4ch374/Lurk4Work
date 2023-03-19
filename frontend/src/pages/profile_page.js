@@ -13,10 +13,16 @@ const profileOverview = () => {
   profileImg.className = "bi bi-person-circle profile-pic-default";
   profileImg.id = "overview-profile-img"
 
+  const profileNameContainer = document.createElement('div');
+  profileNameContainer.className = "d-flex gap-2";
+  profileNameContainer.id = "overview-profile-name-container";
+
   const profileName = document.createElement('h1');
   profileName.className = "fs-1";
   profileName.textContent = "Name";
   profileName.id = "overview-profile-name";
+
+  profileNameContainer.appendChild(profileName);
 
   const profileEmail = document.createElement('h5');
   profileEmail.className = "fs-5";
@@ -48,7 +54,7 @@ const profileOverview = () => {
 
   container.append(
     profileImg,
-    profileName,
+    profileNameContainer,
     profileEmail,
     watchCountBtn,
     watchBtn,

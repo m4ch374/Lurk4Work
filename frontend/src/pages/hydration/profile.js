@@ -1,6 +1,6 @@
 import JobCard from "../../component/job_card.js";
 import { USER_ROUTE, USER_WATCH_ROUTE } from "../../config.js";
-import { getElem, setBootstrapModalContent } from "../../helpers.js";
+import { fileToDataUrl, getElem, linkBtnToModal, setBootstrapModalContent } from "../../helpers.js";
 import Fetcher from "../../fetcher.js";
 import UserHandle from "../../component/user_handle.js";
 
@@ -31,14 +31,130 @@ const toggleUnwatched = (page) => {
 }
 
 const hydrateProfile = (page, props) => {
-  if (props.image) {
-    const profileDefaultImg = getElem("overview-profile-img", page);
+  if (props.image && props.image !== "") {
+    const overviewContainer = getElem("overview-container", page);
+    const profileDefaultImg = getElem("overview-profile-img", overviewContainer);
 
     const profileImg = document.createElement('img');
     profileImg.src = props.image;
-    profileImg.className = "profile-pic object-fit-contain rounded-circle bi bi-person-circle";
+    profileImg.className = "profile-pic object-fit-fill rounded-circle bi bi-person-circle";
+
+    overviewContainer.replaceChild(profileImg, profileDefaultImg);
+  }
+
+  // Lol extremely unsecure
+  if (parseInt(props.id) == parseInt(localStorage.getItem('userId'))) {
+    const editBtn = document.createElement('button');
+    editBtn.type = "button";
+    editBtn.className = "btn btn-outline-light border-0";
     
-    getElem("overview-container", page).replaceChild(profileDefaultImg, profileImg);
+    const editBtnIcon = document.createElement('i');
+    editBtnIcon.className = "bi bi-pencil-square";
+
+    editBtn.appendChild(editBtnIcon);
+    linkBtnToModal(editBtn, "placeholder-modal");
+
+    editBtn.addEventListener('click', () => {
+      const form = document.createElement('form');
+
+      const emailField = document.createElement('div');
+      emailField.className = "mb-3";
+      
+      const emailLabel = document.createElement('label');
+      emailLabel.className = "form-label";
+      emailLabel.textContent = "Email";
+
+      const emailInput = document.createElement('input');
+      emailInput.type = "email";
+      emailInput.className = "form-control";
+
+      emailField.append(emailLabel, emailInput);
+
+      const passwordField = document.createElement('div');
+      passwordField.className = "mb-3";
+      
+      const passwordLabel = document.createElement('label');
+      passwordLabel.className = "form-label";
+      passwordLabel.textContent = "Password";
+
+      const passwordInput = document.createElement('input');
+      passwordInput.type = "password";
+      passwordInput.className = "form-control";
+
+      passwordField.append(passwordLabel, passwordInput);
+
+      const nameField = document.createElement('div');
+      nameField.className = "mb-3";
+      
+      const nameLabel = document.createElement('label');
+      nameLabel.className = "form-label";
+      nameLabel.textContent = "Name";
+
+      const nameInput = document.createElement('input');
+      nameInput.type = "text";
+      nameInput.className = "form-control";
+
+      nameField.append(nameLabel, nameInput);
+
+      const fileField = document.createElement('div');
+      fileField.className = "mb-3";
+      
+      const fileLabel = document.createElement('label');
+      fileLabel.className = "form-label";
+      fileLabel.textContent = "Profile Image";
+
+      const fileInput = document.createElement('input');
+      fileInput.type = "file";
+      fileInput.className = "form-control";
+
+      fileField.append(fileLabel, fileInput);
+
+      const submitBtn = document.createElement('button');
+      submitBtn.type = "submit";
+      submitBtn.className = "btn btn-primary";
+      submitBtn.textContent = "Edit";
+      linkBtnToModal(submitBtn, "placeholder-modal");
+
+      submitBtn.addEventListener('click', () => {
+        let fileUrl = ""
+
+        try {
+          fileToDataUrl(fileInput.files[0]).then(data => {
+            fileUrl = data;
+            const payload = {
+              "email": emailInput.value,
+              "password": passwordInput.value,
+              "name": nameInput.value,
+              "image": fileUrl,
+            }
+    
+            console.log(payload);
+    
+            const result = Fetcher.put(USER_ROUTE)
+                            .withLocalStorageToken()
+                            .withJsonPayload(payload)
+                            .fetchResult();
+    
+            result.then(data => {
+              if (data.error) {
+                alert(data.error);
+              }
+            });
+          });
+        } catch (e) {
+          fileUrl = "";
+          alert(e);
+          console.log(e);
+        } finally {
+          
+        }
+      });
+
+      form.append(emailField, passwordField, nameField, fileField, submitBtn);
+      setBootstrapModalContent("Edit Profile", form);
+    });
+
+    getElem("overview-profile-name-container", page).appendChild(editBtn);
   }
 
   getElem("overview-profile-name", page).textContent = props.name;

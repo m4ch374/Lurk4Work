@@ -27,10 +27,7 @@ const route = () => {
 
   if (hash === "feed") {
     body.appendChild(FeedPage());
-    return;
-  }
-
-  if (hash.startsWith("profile")) {
+  } else if (hash.startsWith("profile")) {
     const rawQuery = hash.substring("profile".length);
 
     if (rawQuery === "" || rawQuery.slice(1) === "") {
@@ -38,9 +35,10 @@ const route = () => {
     } else {
       body.appendChild(ProfilePage(rawQuery.slice(1)));
     }
-
-    return;
   }
+
+  // To offset navbar
+  window.scrollTo({top: -70});
 }
 
 const main = () => {
