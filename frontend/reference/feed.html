@@ -65,26 +65,28 @@
   
       <div class="job-card p-4 pb-3 rounded-3 bg-white text-black mb-4" id="auth-form">
         <div class="fs-3">
-          <i class="bi bi-person-circle"></i>
-          <span>hi</span>
+          <button type="button" class="d-flex align-items-center gap-1 bg-white border-0 m-0 p-0">
+            <img class="job-card-profile-pic object-fit-contain align-self-center" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Base64-encoded PNG image">
+            <span>hi</span>
+          </button>
   
           <h6 class="fs-6 text-secondary job-start-text">date</h6>
         </div>
   
         <hr>
   
-        <div>
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Base64-encoded PNG image">
+        <div class="d-flex flex-column align-items-start">
+          <img class="job-img object-fit-contain align-self-center" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Base64-encoded PNG image">
           <h1> Job Title </h1>
           <h6 class="text-secondary job-start-text">Starts at: date</h6>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid
           </p>
+
+          <button class="text-secondary fs-6 border-0 rounded-2 m-0 p-0 see-like-btn" data-bs-toggle="modal" data-bs-target="#placeholder-modal">
+            See likes
+          </button>
         </div>
-  
-        <button class="text-secondary fs-6 border-0 rounded-2 m-0 p-0 see-like-btn" data-bs-toggle="modal" data-bs-target="#placeholder-modal">
-          See likes
-        </button>
   
         <hr class="mt-1">
   
