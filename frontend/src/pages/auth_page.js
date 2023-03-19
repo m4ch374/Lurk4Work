@@ -5,61 +5,6 @@ import AuthErrorModal from "../component/auth_error_modal.js";
 import FormField from "../component/form_field.js";
 import { hydrateAuth } from "./hydration/auth.js";
 
-const Prompt = (id=undefined) => {
-  const prompt = document.createElement('div');
-  prompt.className = "mb-3";
-
-  if (typeof id != 'undefined') {
-    prompt.id = id;
-  }
-
-  return prompt;
-}
-
-const InputLabel = (textContent) => {
-  const inputLabel = document.createElement('label');
-  inputLabel.className = "form-label";
-  inputLabel.textContent = textContent;
-  return inputLabel;
-}
-
-const FormInput = (id=undefined) => {
-  const formInput = document.createElement('input');
-  formInput.type = "text";
-  formInput.className = "form-control";
-
-  if (typeof id != 'undefined') {
-    formInput.id = id;
-  }
-
-  return formInput;
-}
-
-const NamePrompt = () => {
-  const namePrompt = Prompt('name-prompt');
-  namePrompt.appendChild(InputLabel('Name'));
-  namePrompt.appendChild(FormInput('name-input'));
-  namePrompt.hidden = true;
-
-  return namePrompt;
-}
-
-const EmailPrompt = () => {
-  const emailPrompt = Prompt();
-  emailPrompt.appendChild(InputLabel('Email address'));
-  emailPrompt.appendChild(FormInput('email-input'));
-  
-  return emailPrompt;
-}
-
-const PasswordPrompt = () => {
-  const passwordPrompt = Prompt();
-  passwordPrompt.appendChild(InputLabel('Password'));
-  passwordPrompt.appendChild(FormInput('password-input'));
-
-  return passwordPrompt;
-}
-
 const AuthPage = () => {
   const authPage = document.createElement('div');
 
