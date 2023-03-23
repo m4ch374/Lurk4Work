@@ -71,11 +71,18 @@ const setBtnToCloseModal = (btn) => {
 	btn.setAttribute("data-bs-dismiss", "modal");
 }
 
+const setBootstrapModalState = (state, ownedBy) => {
+	const modal = getElem('placeholder-modal');
+	modal.setAttribute("data-state", state);
+	modal.setAttribute("data-ownedby", ownedBy);
+}
+
 export {
 	getElem, 
 	getTimeDiffStr, 
 	checkIntegrety, 
 	setBootstrapModalContent,
 	linkBtnToModal,
-	setBtnToCloseModal
+	setBtnToCloseModal,
+	setBootstrapModalState
 };

@@ -61,17 +61,21 @@ const pollFeed = (feedPage) => {
     result.then(data => {
       data.forEach(r => {
         const pollCard = feedPage.querySelector(`[id="${r.id}"]`);
+
+        if (typeof pollCard == 'undefined' || !pollCard) {
+          return;
+        }
   
         // polls like button
         const likeText = pollCard.querySelector('.job-card-like-btn > span');
-        likeText.textContent = r.likes.length;
+        likeText.textContent = " " + r.likes.length;
 
         const likeIcon = getElem("post-like-icon", pollCard);
         setLikeIcon(likeIcon, r);
         
         // Polls comment button
         const commentText = pollCard.querySelector('.job-card-comment-btn > span');
-        commentText.textContent = r.comments.length;
+        commentText.textContent = " " + r.comments.length;
       });
     });
   }

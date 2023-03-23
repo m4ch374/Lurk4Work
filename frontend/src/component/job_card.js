@@ -8,24 +8,17 @@ import {
   setBootstrapModalContent,
   linkBtnToModal, 
   getElem,
-  setBtnToCloseModal
+  setBtnToCloseModal,
+  setBootstrapModalState
 } from "../helpers.js";
 import NewPostForm from "./new_post_form.js";
+import SeeLikes from "./see_likes.js";
+import SeeComments from "./see_comments.js";
 
 const hydration = (jobCard, props) => {
   jobCard.querySelector('.see-like-btn').addEventListener('click', () => {
-    const wrapper = document.createElement('div');
-    if (props.likes.length == 0) {
-      wrapper.textContent = "There are currently no likes";
-    } else {
-      wrapper.appendChild(UserHandle(props.likes[0].userId));
-      props.likes.slice(1).forEach(l => {
-        wrapper.appendChild(document.createElement('hr'));
-        wrapper.appendChild(UserHandle(l.userId));
-      });
-    }
-
-    setBootstrapModalContent("Likes", wrapper);
+    setBootstrapModalState("like", props.id);
+    setBootstrapModalContent("Likes", SeeLikes(props.likes));
   });
 
   jobCard.querySelector('.job-card-like-btn').addEventListener('click', () => {
@@ -51,17 +44,10 @@ const hydration = (jobCard, props) => {
   });
 
   jobCard.querySelector('.job-card-comment-btn').addEventListener('click', () => {
-    const commentSection = document.createElement('div');
+    setBootstrapModalState("comment", props.id);
     
-    if (props.comments.length == 0) {
-      commentSection.textContent = "There are no comments";
-    } else {
-      commentSection.appendChild(Comment(props.comments[0]));
-      props.comments.slice(1).forEach(c => {
-        commentSection.appendChild(document.createElement('hr'));
-        commentSection.appendChild(Comment(c));
-      });
-    }
+    const commentSection = document.createElement('div');
+    commentSection.appendChild(SeeComments(props.comments));
 
     const commentForm = document.createElement('form');
     commentForm.className = "mt-3";
@@ -76,7 +62,6 @@ const hydration = (jobCard, props) => {
     const commentBtn = document.createElement('button');
     commentBtn.className = "btn btn-outline-secondary";
     commentBtn.textContent = "Send";
-    setBtnToCloseModal(commentBtn);
 
     commentField.append(commentInput, commentBtn);
     commentForm.appendChild(commentField);
@@ -89,6 +74,7 @@ const hydration = (jobCard, props) => {
         "id": jobCard.id,
         "comment": commentInput.value,
       };
+      commentInput.value = "";
 
       const result = Fetcher.post(JOB_COMMENT_ROUTE)
                       .withLocalStorageToken()

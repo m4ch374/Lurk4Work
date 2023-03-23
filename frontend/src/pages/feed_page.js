@@ -10,7 +10,9 @@ const FeedPage = () => {
   hydrateFeed(feedPage);
 
   setInterval(() => {
-    pollFeed(document.querySelector("#feed"));
+    if (window.location.hash.includes("feed")) {
+      pollFeed(document.querySelector("#feed"));
+    }
   }, POLL_INTERVAL);
 
   return Layout(feedPage);

@@ -1,6 +1,8 @@
 import Layout from "../component/Layout.js";
+import { POLL_INTERVAL } from "../config.js";
 import { linkBtnToModal } from "../helpers.js";
 import { hydration } from "./hydration/profile.js";
+import { pollFeed } from "./hydration/feed.js";
 
 const profileOverview = () => {
   const overview = document.createElement('div');
@@ -78,6 +80,13 @@ const ProfilePage = (userId=localStorage.getItem('userId')) => {
   profilePage.append(overview, jobs);
 
   hydration(profilePage, userId);
+
+  setInterval(() => {
+    if (window.location.hash.includes("profile")) {
+      pollFeed(document.querySelector("#profile-jobs"));
+    }
+  }, POLL_INTERVAL);
+
   return Layout(profilePage);
 }
 

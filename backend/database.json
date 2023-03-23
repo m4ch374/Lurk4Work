@@ -53,7 +53,9 @@
       "start": "2023-03-20T00:50:00.000Z",
       "description": "Fly the F4-S Phantom II",
       "createdAt": "2023-03-19T15:27:45.660Z",
-      "likes": {},
+      "likes": {
+        "97467": true
+      },
       "comments": [
         {
           "userId": "97467",
@@ -150,6 +152,22 @@
         {
           "userId": "65687",
           "comment": "lmaooo"
+        },
+        {
+          "userId": "65687",
+          "comment": "lfjlasjdf"
+        },
+        {
+          "userId": "97467",
+          "comment": "sdfasdfasdfasdfs"
+        },
+        {
+          "userId": "97467",
+          "comment": "hi"
+        },
+        {
+          "userId": "97467",
+          "comment": "more"
         }
       ]
     },
@@ -279,6 +297,46 @@
         {
           "userId": "65687",
           "comment": ""
+        },
+        {
+          "userId": "65687",
+          "comment": "more test"
+        },
+        {
+          "userId": "65687",
+          "comment": "even more test"
+        },
+        {
+          "userId": "65687",
+          "comment": "tttest"
+        },
+        {
+          "userId": "65687",
+          "comment": "asdfasd"
+        },
+        {
+          "userId": "65687",
+          "comment": "asdfasd"
+        },
+        {
+          "userId": "65687",
+          "comment": "asdfasd"
+        },
+        {
+          "userId": "65687",
+          "comment": "fdsfd"
+        },
+        {
+          "userId": "65687",
+          "comment": "fdsfsdasfdasdfasd"
+        },
+        {
+          "userId": "65687",
+          "comment": "sommmme"
+        },
+        {
+          "userId": "65687",
+          "comment": "did it work"
         }
       ]
     }
