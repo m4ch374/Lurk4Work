@@ -67,10 +67,15 @@ const linkBtnToModal = (btn, modalName) => {
   btn.setAttribute("data-bs-target", `#${modalName}`);
 }
 
+const setBtnToCloseModal = (btn) => {
+	btn.setAttribute("data-bs-dismiss", "modal");
+}
+
 export {
 	getElem, 
 	getTimeDiffStr, 
 	checkIntegrety, 
 	setBootstrapModalContent,
-	linkBtnToModal
+	linkBtnToModal,
+	setBtnToCloseModal
 };

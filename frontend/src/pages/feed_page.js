@@ -1,5 +1,6 @@
 import Layout from '../component/Layout.js';
-import { hydrateFeed } from './hydration/feed.js';
+import { POLL_INTERVAL } from '../config.js';
+import { hydrateFeed, pollFeed } from './hydration/feed.js';
 
 const FeedPage = () => {
   const feedPage = document.createElement('div');
@@ -7,6 +8,10 @@ const FeedPage = () => {
   feedPage.id = "feed";
 
   hydrateFeed(feedPage);
+
+  setInterval(() => {
+    pollFeed(document.querySelector("#feed"));
+  }, POLL_INTERVAL);
 
   return Layout(feedPage);
 }

@@ -1,6 +1,7 @@
 import jobCard from '../../component/job_card.js';
 import { JOB_FEED_ROUTE, POSTS_PER_LOAD } from '../../config.js';
 import Fetcher from '../../fetcher.js';
+import { getElem } from '../../helpers.js';
 
 const populateFeed = (startIdx, feedPage) => {
   const fetchResult = Fetcher.get(JOB_FEED_ROUTE)
@@ -38,4 +39,42 @@ const hydrateFeed = (feedPage) => {
   });
 }
 
-export {hydrateFeed};
+const setLikeIcon = (likeIcon, data) => {
+  const likePost = data.likes.map(l => l.userId)
+                    .includes(parseInt(localStorage.getItem('userId')));
+
+  if(likePost) {
+    likeIcon.classList.remove("bi-hand-thumbs-up");
+    likeIcon.classList.add("bi-hand-thumbs-up-fill");
+  }
+}
+
+const pollFeed = (feedPage) => {
+  const jobCardList = feedPage.querySelectorAll('.job-card');
+
+  for (let i = 0; i < jobCardList.length; i += POSTS_PER_LOAD) {
+    const result = Fetcher.get(JOB_FEED_ROUTE)
+                    .withLocalStorageToken()
+                    .withQuery("start", i)
+                    .fetchResult();
+
+    result.then(data => {
+      data.forEach(r => {
+        const pollCard = feedPage.querySelector(`[id="${r.id}"]`);
+  
+        // polls like button
+        const likeText = pollCard.querySelector('.job-card-like-btn > span');
+        likeText.textContent = r.likes.length;
+
+        const likeIcon = getElem("post-like-icon", pollCard);
+        setLikeIcon(likeIcon, r);
+        
+        // Polls comment button
+        const commentText = pollCard.querySelector('.job-card-comment-btn > span');
+        commentText.textContent = r.comments.length;
+      });
+    });
+  }
+}
+
+export { hydrateFeed, pollFeed };

@@ -1,6 +1,6 @@
 import { USER_WATCH_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
-import { getElem, linkBtnToModal, setBootstrapModalContent } from "../helpers.js";
+import { getElem, linkBtnToModal, setBootstrapModalContent, setBtnToCloseModal } from "../helpers.js";
 import BootstrapModal from "./bootstrap_modal.js";
 import FormField from "./form_field.js";
 import NewPostForm from "./new_post_form.js";
@@ -41,7 +41,7 @@ const hydration = (menu) => {
       submitBtn.type = "submit";
       submitBtn.className = "btn btn-primary";
       submitBtn.textContent = "Watch";
-      linkBtnToModal(submitBtn, "placeholder-modal");
+      setBtnToCloseModal(submitBtn);
 
       form.append(emailField, submitBtn);
 

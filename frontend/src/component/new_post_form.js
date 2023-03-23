@@ -1,6 +1,6 @@
 import { JOB_ROUTE } from "../config.js";
 import Fetcher from "../fetcher.js";
-import { fileToDataUrl, getElem, linkBtnToModal } from "../helpers.js";
+import { fileToDataUrl, getElem, setBtnToCloseModal } from "../helpers.js";
 import FormField from "./form_field.js";
 
 const hydration = (form, id) => {
@@ -78,7 +78,7 @@ const NewPostForm = (id=undefined) => {
   submitBtn.className = "btn btn-primary";
   submitBtn.textContent = typeof id === 'undefined' ? "Post" : "Edit";
   submitBtn.id = "new-post-submit-btn";
-  linkBtnToModal(submitBtn, "placeholder-modal");
+  setBtnToCloseModal(submitBtn);
 
   form.append(
     titleField,

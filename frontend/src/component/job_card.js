@@ -7,13 +7,10 @@ import {
   getTimeDiffStr, 
   setBootstrapModalContent,
   linkBtnToModal, 
-  getElem
+  getElem,
+  setBtnToCloseModal
 } from "../helpers.js";
 import NewPostForm from "./new_post_form.js";
-
-const likedPost = (props) => {
-  return props.likes.map(l => l.userId).includes(parseInt(localStorage.getItem('userId')));
-}
 
 const hydration = (jobCard, props) => {
   jobCard.querySelector('.see-like-btn').addEventListener('click', () => {
@@ -32,12 +29,9 @@ const hydration = (jobCard, props) => {
   });
 
   jobCard.querySelector('.job-card-like-btn').addEventListener('click', () => {
-    const likePost = likedPost(props);
-    const likeIcon = getElem("post-like-icon", jobCard);
-
     const payload = {
       "id": props.id,
-      "turnon": !likePost,
+      "turnon": true,
     };
 
     const result = Fetcher.put(JOB_LIKE_ROUTE)
@@ -48,15 +42,7 @@ const hydration = (jobCard, props) => {
     result.then(data => {
         if (data.error) {
           alert(data.error);
-        } else {
-          if(likePost) {
-            likeIcon.classList.remove("bi-hand-thumbs-up-fill");
-            likeIcon.classList.add("bi-hand-thumbs-up");
-          } else {
-            likeIcon.classList.remove("bi-hand-thumbs-up");
-            likeIcon.classList.add("bi-hand-thumbs-up-fill");
-          }
-        }
+        } 
       })
       .catch(e => {
         alert("something went wrong");
@@ -90,7 +76,7 @@ const hydration = (jobCard, props) => {
     const commentBtn = document.createElement('button');
     commentBtn.className = "btn btn-outline-secondary";
     commentBtn.textContent = "Send";
-    linkBtnToModal(commentBtn, "placeholder-modal");
+    setBtnToCloseModal(commentBtn);
 
     commentField.append(commentInput, commentBtn);
     commentForm.appendChild(commentField);
@@ -228,9 +214,7 @@ const jobCardFooterLike = (props) => {
   likes.className = "col border-0 bg-white job-card-like-btn";
 
   const likeIcon = document.createElement('i');
-  const userLikedPost = likedPost(props);
-  likeIcon.className = "bi ";
-  likeIcon.className += userLikedPost ? "bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up";
+  likeIcon.className = "bi bi-hand-thumbs-up";
   likeIcon.id = "post-like-icon";
 
   const likeCount = document.createElement('span');
