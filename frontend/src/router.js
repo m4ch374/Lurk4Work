@@ -1,3 +1,8 @@
+// This is the last day before the deadline and
+// I realized I could instead just show and hide pages
+// I am a huge retard for bringing in the React mindset 
+// in a vanilla project 
+
 import { checkIntegrety } from "./helpers.js";
 import AuthPage from "./pages/auth_page.js";
 import FeedPage from "./pages/feed_page.js";
